@@ -39,57 +39,370 @@ client.user.setGame(`$help | FoxGeneral 💙✨ `,"https://www.twitch.tv/S-F")
 });
 
 
-
-      client.on("message", message => {
-    if (message.content.toLowerCase() === "help") {
-        message.delete(5000)
-        if(!message.channel.guild) return;
-        const e = new Discord.RichEmbed()
-        .setColor('#36393e')
-        .setTitle('Check Your DM’s')
-     const embed = new Discord.RichEmbed()
-         .setColor('#36393e')
-         .setTitle('Click To Join Support Server')
-         .setURL('https://discord.gg/REKnChB')
-         .setDescription(`
-         \`\`\` FoxGeneral  :\`\`\`         
-         
-         - ${prefix}ping
-         
-         - ${prefix}avatar
-         
-         - ${prefix}info
-         
-         - ${prefix}msg ,, ${prefix}send
-    
-         - ${prefix}id
-         
-         - ${prefix}sug
-         
-         - ${prefix}member
-         
-         - ${prefix}sever
-         
-         - ${prefix}credits
-         
-         - ${prefix}dayli
-         
-         - ${prefix}trans
-         
-         - ${prefix}role
-         
-         - ${prefix}new
-         
-         - ${prefix}new-
+client.on("message", message => {
+ if (message.content === "=help-public") {
+  const embed = new Discord.RichEmbed()
+      .setColor("RANDOM")
+      .setDescription('👑أوامر الأعضاء👑')
+          .addField('❖-|$invite', `👑لاضافة البوت الى سيرفرك💯`)
+  	  .addField('❖-|$bot', `🔱لمعرفة معلومات البوت🅱`)
+	  .addField('❖-|$role', `👑لمعرفة الرتب الي في السيرفر🔱`)
+          .addField('❖-|$avatar', `🔰يجبلك الافتار حقك يعني صورة حسابك🔰`)
+	  .addField('❖-|$id', `🆔يجبلك الملف الشخصي حقك🆔`)
+  	  .addField('❖-|$say', `🎆البوت يكرر الكلام الي انت تقوله بدون امبد📝`)
+          .addField('❖-|$server', `➰معلومات عن السيرفر بشكل كامل➰`)
+          .addField('❖-|$ping', `🔰سرعة البوت👑`)
+	  .addField('❖-|$userinfo', `معرفت الشخص مفصل`)
+	  .addField('❖-|$say', `🎆البوت يكرر الكلام الي انت تقوله بدون امبد📝`)
+	  .addField('❖-|$image', `📷يعرض صورة سيرفر⛺`)
+          .addField('❖-|$credits', `👑عشان تشوف الكردتس الخاصة بك👑`)
+          .addField('❖-|$daily', `💲عشان تاخذ الكردتس اليومية الخاصة بك💵`)
+          .addField('❖-|$trans', `💰عشان تعطي لاحد مبلغ من الكردتس الخاصة بك💳`)
+          .addField('❖-|$sug', `🔱لاقتراح شئ و لازم يكون فيه روم اسمه suggestions👑`)
+          .addField('❖-|$BotTime', `🕞عشان تشوف البوت شغال من متى🅱`)
+          .addField('❖-|$info', `🚩عشان تعرف معلومات البوت🚩`)
+  message.author.send({embed});
+      message.channel.send(":white_check_mark: | Check Your DM تم الأرسال بلخاص")
+ }
+});
 
 
-         \`\`\` FoxGeneral  :\`\`\`     
-`)
-   message.channel.send(e).then(m => m.delete(5000))
-   message.author.sendEmbed(embed).catch(error => message.reply('Your DM’s is CLosed'))
-   
-   }
-   });
+client.on('message' , message => {
+    var prefix = "$";
+if(message.content.startsWith(prefix+"userinfo")) {
+    let user = message.mentions.users.first() || message.author;
+    const joineddiscord = (user.createdAt.getDate() + 1) + '-' + (user.createdAt.getMonth() + 1) + '-' + user.createdAt.getFullYear() + ' | ' + user.createdAt.getHours() + ':' + user.createdAt.getMinutes() + ':' + user.createdAt.getSeconds();
+    message.delete();
+    let game;
+    if (user.presence.game === null) {
+        game = 'لا يلعب حاليا.';
+    } else {
+        game = user.presence.game.name;
+    }
+    let messag;
+    if (user.lastMessage === null) {
+        messag = 'لم يرسل رسالة. ';
+    } else {
+        messag = user.lastMessage;
+    }
+    let status;
+    if (user.presence.status === 'online') {
+        status = ':green_heart:';
+    } else if (user.presence.status === 'dnd') {
+        status = ':heart:';
+    } else if (user.presence.status === 'idle') {
+        status = ':yellow_heart:';
+    } else if (user.presence.status === 'offline') {
+        status = ':black_heart:';
+    }
+    if (user.presence.status === 'offline') {
+        stat = 0x000000;
+    } else if (user.presence.status === 'online') {
+        stat = 0x00AA4C;
+    } else if (user.presence.status === 'dnd') {
+        stat = 0x9C0000;
+    } else if (user.presence.status === 'idle') {
+        stat = 0xF7C035;
+    }
+    const embed = new Discord.RichEmbed()
+  .addField('**UserInfo:**', `**name:** ${user.username}#${user.discriminator}\n**JoinedDiscord:** ${joineddiscord}\n**LastMessage:** ${messag}\n**Playing:** ${game}\n**Status:** ${status}\n**Bot?** ${user.bot}`, true)
+  .setThumbnail(user.displayAvatarURL)
+  .addField(`Roles:`, message.guild.members.get(user.id).roles.array(role => role.name).slice(1).join(', '))
+  .addField('DiscordInfo:', `**Discriminator:** #${user.discriminator}\n**ID:** ${user.id}\n**Username:** ${user.username}`)
+  .setAuthor(`معلومات ${user.username}`, user.displayAvatarURL)
+  .setColor(stat);
+    message.channel.send({embed})
+  .catch(e => logger.error(e));
+}
+ });
+
+client.on('message', message => {
+  if (message.author.bot) return;
+  if (!message.content.startsWith(prefix)) return;
+
+  let command = message.content.split(" ")[0];
+  command = command.slice(prefix.length);
+
+  let args = message.content.split(" ").slice(1);
+
+  if (command == "$say") {
+   message.channel.sendMessage(args.join("  "))
+   message.delete()
+  }
+ });
+
+client.on('message', message => {
+ if (message.content.startsWith("$wlc 1")) {
+                                 var mentionned = message.mentions.users.first();
+             var mentionavatar;
+               if(mentionned){
+                   var mentionavatar = mentionned;
+               } else {
+                   var mentionavatar = message.author;
+                   
+               }
+               let bot;
+               if(message.author.bot) {
+                   bot = 'Bot'
+               } else {
+                   bot = 'User'
+               } 
+  var EsTeKnAN = new Discord.RichEmbed()
+  .setColor('RANDOM')
+  .setThumbnail(`${mentionavatar.avatarURL}`)
+  .addField("***شكرا الانضمامك الينا***" ,mentionavatar.username )
+  .setDescription('***بكل حب واحترام وشوق نستقبلك ونتمنى لك قضآء أجمل اللحظات ولآوقات معنا***')
+  .setImage('http://www.imgion.com/images/01/Welcome-buddy.jpg')
+   message.channel.sendEmbed(EsTeKnAN);
+  }
+});
+ 
+  
+client.on('message', message => {
+ if (message.content.startsWith("$wlc 2")) {
+                                 var mentionned = message.mentions.users.first();
+             var mentionavatar;
+               if(mentionned){
+                   var mentionavatar = mentionned;
+               } else {
+                   var mentionavatar = message.author;
+                   
+               }
+               let bot;
+               if(message.author.bot) {
+                   bot = 'Bot'
+               } else {
+                   bot = 'User'
+               } 
+  var EsTeKnAN = new Discord.RichEmbed()
+  .setColor('RANDOM')
+  .setThumbnail(`${mentionavatar.avatarURL}`)
+  .addField("***شكرا الانضمامك الينا***" ,mentionavatar.username )
+  .setDescription('***هلا باللي ملك قلبي هلا باللي فداه الروح هلا باللي شغل فكري هلا باللي هواه البوح.***')
+  .setImage('https://www.askideas.com/media/13/Welcome-With-Rose-Flowers-Sign.jpg')
+   message.channel.sendEmbed(EsTeKnAN);
+  }
+});
+
+  
+client.on('message', message => {
+ if (message.content.startsWith("$wlc 3")) {
+                                 var mentionned = message.mentions.users.first();
+             var mentionavatar;
+               if(mentionned){
+                   var mentionavatar = mentionned;
+               } else {
+                   var mentionavatar = message.author;
+                   
+               }
+               let bot;
+               if(message.author.bot) {
+                   bot = 'Bot'
+               } else {
+                   bot = 'User'
+               } 
+  var EsTeKnAN = new Discord.RichEmbed()
+  .setColor('RANDOM')
+  .setThumbnail(`${mentionavatar.avatarURL}`)
+  .addField("***شكرا الانضمامك الينا***" ,mentionavatar.username )
+  .setDescription('***مرحباً بك عدد ما خطته الأقلام من حروف وبعدد ما أزهر بالأرض زهور مرحباً ممزوجة بعطر الورد ورائحة البخور***')
+  .setImage('https://www.askideas.com/media/13/Welcome-Signboard-Clipart.jpg')
+   message.channel.sendEmbed(EsTeKnAN);
+  }
+});
+
+  
+client.on('message', message => {
+ if (message.content.startsWith("$wlc 4")) {
+                                 var mentionned = message.mentions.users.first();
+             var mentionavatar;
+               if(mentionned){
+                   var mentionavatar = mentionned;
+               } else {
+                   var mentionavatar = message.author;
+                   
+               }
+               let bot;
+               if(message.author.bot) {
+                   bot = 'Bot'
+               } else {
+                   bot = 'User'
+               } 
+  var EsTeKnAN = new Discord.RichEmbed()
+  .setColor('RANDOM')
+  .setThumbnail(`${mentionavatar.avatarURL}`)
+  .addField("***شكرا الانضمامك الينا***" ,mentionavatar.username )
+  .setDescription('***مرحبا باللي يجينا هلت الفرحة علينا نشدت الأشواق فينا مرحباً بكم مرحباً.***')
+  .setImage('https://www.askideas.com/media/13/Welcome-Sign.jpg')
+   message.channel.sendEmbed(EsTeKnAN);
+  }
+});
+
+  
+client.on('message', message => {
+ if (message.content.startsWith("$wlc 5")) {
+                                 var mentionned = message.mentions.users.first();
+             var mentionavatar;
+               if(mentionned){
+                   var mentionavatar = mentionned;
+               } else {
+                   var mentionavatar = message.author;
+                   
+               }
+               let bot;
+               if(message.author.bot) {
+                   bot = 'Bot'
+               } else {
+                   bot = 'User'
+               } 
+  var EsTeKnAN = new Discord.RichEmbed()
+  .setColor('RANDOM')
+  .setThumbnail(`${mentionavatar.avatarURL}`)
+  .addField("***شكرا الانضمامك الينا***" ,mentionavatar.username )
+  .setDescription('***لو علمت الدار بمن زارها فرحت وأستبشرت ثم باست موضع القدمين وأنشدت بلسان الحال قائلة أهلاً وسهلاً بأهل الجود والكرم.***')
+  .setImage('https://www.askideas.com/media/13/Welcome-Sign-With-Flowers.jpg')
+   message.channel.sendEmbed(EsTeKnAN);
+  }
+});
+
+  
+client.on('message', message => {
+ if (message.content.startsWith("=wlc 6")) {
+                                 var mentionned = message.mentions.users.first();
+             var mentionavatar;
+               if(mentionned){
+                   var mentionavatar = mentionned;
+               } else {
+                   var mentionavatar = message.author;
+                   
+               }
+               let bot;
+               if(message.author.bot) {
+                   bot = 'Bot'
+               } else {
+                   bot = 'User'
+               } 
+  var EsTeKnAN = new Discord.RichEmbed()
+  .setColor('RANDOM')
+  .setThumbnail(`${mentionavatar.avatarURL}`)
+  .addField("***شكرا الانضمامك الينا***" ,mentionavatar.username )
+  .setDescription('***مرحبا بك كثر النجوم الساطعة وكثر الورود الفائحة التي تفوح بأزكى العطور وكثر ما تكتب الأقلام من الحروف والعبارات. ***')
+  .setImage('https://www.askideas.com/media/13/Welcome-Sign-For-Front-Door.jpg')
+   message.channel.sendEmbed(EsTeKnAN);
+  }
+});
+
+  
+client.on('message', message => {
+ if (message.content.startsWith("$wlc 7")) {
+                                 var mentionned = message.mentions.users.first();
+             var mentionavatar;
+               if(mentionned){
+                   var mentionavatar = mentionned;
+               } else {
+                   var mentionavatar = message.author;
+                   
+               }
+               let bot;
+               if(message.author.bot) {
+                   bot = 'Bot'
+               } else {
+                   bot = 'User'
+               } 
+  var EsTeKnAN = new Discord.RichEmbed()
+  .setColor('RANDOM')
+  .setThumbnail(`${mentionavatar.avatarURL}`)
+  .addField("***شكرا الانضمامك الينا***" ,mentionavatar.username )
+  .setDescription('***حي الله هذه الوجوه رؤيتها تزيد الأفراح، نسماتها تداوي الجروح، وعبيرها فواح، تنثره الرياح، على القمم في الليل في الصباح***')
+  .setImage('https://www.askideas.com/media/13/Small-Welcome-Sign-On-Door.jpg')
+   message.channel.sendEmbed(EsTeKnAN);
+  }
+});
+
+  
+client.on('message', message => {
+ if (message.content.startsWith("$wlc 8")) {
+                                 var mentionned = message.mentions.users.first();
+             var mentionavatar;
+               if(mentionned){
+                   var mentionavatar = mentionned;
+               } else {
+                   var mentionavatar = message.author;
+                   
+               }
+               let bot;
+               if(message.author.bot) {
+                   bot = 'Bot'
+               } else {
+                   bot = 'User'
+               } 
+  var EsTeKnAN = new Discord.RichEmbed()
+  .setColor('RANDOM')
+  .setThumbnail(`${mentionavatar.avatarURL}`)
+  .addField("***شكرا الانضمامك الينا***" ,mentionavatar.username )
+  .setDescription('***مرحبا بكل الضيوف يوم نادى غير عادي مرحبا فوق الألوف ***')
+  .setImage('https://www.askideas.com/media/13/Welcome-Colorful-Sign-Picture.jpg')
+   message.channel.sendEmbed(EsTeKnAN);
+  }
+});
+
+  
+client.on('message', message => {
+ if (message.content.startsWith("$wlc 9")) {
+                                 var mentionned = message.mentions.users.first();
+             var mentionavatar;
+               if(mentionned){
+                   var mentionavatar = mentionned;
+               } else {
+                   var mentionavatar = message.author;
+                   
+               }
+               let bot;
+               if(message.author.bot) {
+                   bot = 'Bot'
+               } else {
+                   bot = 'User'
+               } 
+  var EsTeKnAN = new Discord.RichEmbed()
+  .setColor('RANDOM')
+  .setThumbnail(`${mentionavatar.avatarURL}`)
+  .addField("***شكرا الانضمامك الينا***" ,mentionavatar.username )
+  .setDescription('***يا مرحبا وسهلاً بضيف لفانا، يزهي بك الأدب العربي وينثر لك أزهار يسقيك من نبع المشاعر وفانا، لين الهلا تثمر على غصونك أطيار. ***')
+  .setImage('https://www.askideas.com/media/13/Welcome-Deers-Sign.jpg')
+   message.channel.sendEmbed(EsTeKnAN);
+  }
+});
+
+  
+client.on('message', message => {
+ if (message.content.startsWith("$wlc 10")) {
+                                 var mentionned = message.mentions.users.first();
+             var mentionavatar;
+               if(mentionned){
+                   var mentionavatar = mentionned;
+               } else {
+                   var mentionavatar = message.author;
+                   
+               }
+               let bot;
+               if(message.author.bot) {
+                   bot = 'Bot'
+               } else {
+                   bot = 'User'
+               } 
+  var EsTeKnAN = new Discord.RichEmbed()
+  .setColor('RANDOM')
+  .setThumbnail(`${mentionavatar.avatarURL}`)
+  .addField("***شكرا الانضمامك الينا***" ,mentionavatar.username )
+  .setDescription('***كل شيء يرحب بك كل شيء يتبسم ويتوهج فرحاً بقدومك كل شيء ينمق عبارات الترحيب ويصوغ كلمات الحب لوجودك كل شيء ينتظر مشارك��تك وقلمك الرائع وأبداعاتك كل شيء يردد حياك الله.***')
+  .setImage('https://www.askideas.com/media/13/Beautiful-Wooden-Welcome-Sign.jpg')
+   message.channel.sendEmbed(EsTeKnAN);
+  }
+});
+		
+	
+
+
   
 
 client.on('message', message => {
