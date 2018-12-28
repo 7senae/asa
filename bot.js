@@ -38,6 +38,60 @@ client.user.setGame(`$help | FoxGeneral 💙✨ `,"https://www.twitch.tv/S-F")
   console.log('')
 });
 
+
+
+      client.on("message", message => {
+    if (message.content.toLowerCase() === prefix + "help") {
+        message.delete(5000)
+        if(!message.channel.guild) return;
+        const e = new Discord.RichEmbed()
+        .setColor('#36393e')
+        .setTitle('Check Your DM’s')
+     const embed = new Discord.RichEmbed()
+         .setColor('#36393e')
+         .setTitle('Click To Join Support Server')
+         .setURL('https://discord.gg/REKnChB')
+         .setDescription(`
+         \`\`\` FoxGeneral  :\`\`\`         
+         
+         - ${prefix}ping
+         
+         - ${prefix}avatar
+         
+         - ${prefix}info
+         
+         - ${prefix}msg ,, ${prefix}send
+    
+         - ${prefix}id
+         
+         - ${prefix}sug
+         
+         - ${prefix}member
+         
+         - ${prefix}sever
+         
+         - ${prefix}credits
+         
+         - ${prefix}dayli
+         
+         - ${prefix}trans
+         
+         - ${prefix}role
+         
+         - ${prefix}new
+         
+         - ${prefix}new-
+
+
+         \`\`\` FoxGeneral  :\`\`\`     
+`)
+   message.channel.send(e).then(m => m.delete(5000))
+   message.author.sendEmbed(embed).catch(error => message.reply('Your DM’s is CLosed'))
+   
+   }
+   });
+  
+
 client.on('message', message => {
 	if(message.author.bot) return;
      if (message.content === "$ping") {
@@ -571,7 +625,7 @@ mentionned.send(`:credit_card: | Transfer Receipt \`\`\`\`You have received ${ar
 
 client.on("message", (message) => {
     /// ALPHA CODES
-   if (message.content.startsWith("$ticket")) {     /// ALPHA CODES
+   if (message.content.startsWith("$new")) {     /// ALPHA CODES
         const reason = message.content.split(" ").slice(1).join(" ");     /// ALPHA CODES
         if (!message.guild.roles.exists("name", "Support Team")) return message.channel.send(`This server doesn't have a \`Support Team\` role made, so the ticket won't be opened.\nIf you are an administrator, make one with that name exactly and give it to users that should be able to see tickets.`);
         if (message.guild.channels.exists("name", "ticket-{message.author.id}" + message.author.id)) return message.channel.send(`You already have a ticket open.`);    /// ALPHA CODES
@@ -602,7 +656,7 @@ client.on("message", (message) => {
     }
  
  
-  if (message.content.startsWith("-close")) {
+  if (message.content.startsWith("$new-")) {
         if (!message.channel.name.startsWith(`ticket-`)) return message.channel.send(`You can't use the close command outside of a ticket channel.`);
  
        message.channel.send(`Are you sure? Once confirmed, you cannot reverse this action!\nTo confirm, type \`-confirm\`. This will time out in 10 seconds and be cancelled.`)
