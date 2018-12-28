@@ -41,7 +41,7 @@ client.user.setGame(`$help | FoxGeneral 💙✨ `,"https://www.twitch.tv/S-F")
 
 
       client.on("message", message => {
-    if (message.content.toLowerCase() === prefix + "help") {
+    if (message.content.toLowerCase() === "help") {
         message.delete(5000)
         if(!message.channel.guild) return;
         const e = new Discord.RichEmbed()
